@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --app-bg: #f5f1e8;
+  --app-ink: #142033;
+  --app-line: #d8dfeb;
+  --app-panel: #fffdf8;
+  --app-accent: #4f7cff;
+  --app-accent-soft: #77d6c9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--app-ink);
+  background:
+    radial-gradient(circle at top left, rgba(79, 124, 255, 0.12), transparent 28%),
+    radial-gradient(circle at top right, rgba(119, 214, 201, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0)),
+    var(--app-bg);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(20, 32, 51, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 32, 51, 0.018) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(circle at center, black, transparent 85%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(79, 124, 255, 0.18);
+  color: var(--app-ink);
+}
+
+input[type='range'] {
+  accent-color: var(--app-accent);
+}
+
+.premium-gradient-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at 78% 78%, rgba(132, 245, 234, 0.5), transparent 20%),
+    radial-gradient(circle at 62% 32%, rgba(128, 232, 255, 0.28), transparent 26%),
+    linear-gradient(165deg, #173246 0%, #23485e 36%, #4ca6b3 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 28px 90px -42px rgba(8, 19, 31, 0.58);
+}
+
+.premium-gradient-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.1), transparent 30%);
+  pointer-events: none;
+}
+
+.premium-gradient-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.premium-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+.premium-chip {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
