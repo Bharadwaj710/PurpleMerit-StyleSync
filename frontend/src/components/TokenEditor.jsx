@@ -276,7 +276,7 @@ export function TokenEditor() {
           <div className="space-y-3 rounded-[1.8rem] border border-slate-100 bg-white/45 p-4">
             {tokens.spacing.scale.map((value, index) => (
               <div
-                key={`${index}-${value}`}
+                key={`space-edit-${index}`}
                 className={`flex flex-wrap items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
                   lockedTokens[`spacing.scale.${index}`] 
                     ? 'border-sky-200 bg-sky-50/40 shadow-[0_0_15px_rgba(56,189,248,0.15)] ring-1 ring-sky-300/50 scale-[1.01]' 
@@ -299,8 +299,8 @@ export function TokenEditor() {
                     background: `linear-gradient(to right, rgb(59 130 246) 0%, rgb(59 130 246) ${((value - 2) / 94) * 100}%, rgb(226 232 240) ${((value - 2) / 94) * 100}%, rgb(226 232 240) 100%)`,
                   }}
                 />
-                <div className="flex items-center justify-end gap-2 ml-auto">
-                  <span className="rounded-xl bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700">{value}px</span>
+                <div className="flex items-center justify-end gap-2 ml-auto min-w-[100px]">
+                  <span className="inline-block min-w-[50px] text-center rounded-xl bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700">{value}px</span>
                   <LockButton tokenKey={`spacing.scale.${index}`} />
                 </div>
               </div>

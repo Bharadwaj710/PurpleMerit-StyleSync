@@ -315,7 +315,7 @@ export function PreviewGrid() {
               </p>
               <div className="flex items-end gap-3">
                 {tokens.spacing.scale.slice(0, 5).map((space, index) => (
-                  <div key={space} className="flex-1 text-center">
+                  <div key={`preview-space-${index}`} className="flex-1 text-center">
                     <div
                       className="rounded-t-2xl transition-all duration-300"
                       style={{
