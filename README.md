@@ -29,3 +29,49 @@ This application fulfills all primary requirements for the assessment:
 
 ## Exporting & Using Tokens
 Once a token theme is extracted and tweaked to perfection, users can easily export the final configuration via the dashboard into raw CSS variables for instant drop-in usage across any web project.
+
+## Database Schema (PostgreSQL)
+
+Run the following SQL script in your Supabase SQL Editor to initialize the required schema:
+
+```sql
+-- 1. Sites Table
+CREATE TABLE scraped_sites (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  url TEXT NOT NULL,
+  html_snapshot TEXT,
+  target_audience TEXT,
+  personality TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  status TEXT DEFAULT 'pending'
+);
+
+-- 2. Tokens Table
+CREATE TABLE design_tokens (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  site_id UUID REFERENCES scraped_sites(id) ON DELETE CASCADE,
+  colors JSONB NOT NULL DEFAULT '{}',
+  typography JSONB NOT NULL DEFAULT '{}',
+  spacing JSONB NOT NULL DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Locked Tokens Tracking
+CREATE TABLE locked_tokens (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  site_id UUID REFERENCES scraped_sites(id) ON DELETE CASCADE,
+  token_key TEXT NOT NULL,
+  is_locked BOOLEAN DEFAULT true,
+  locked_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(site_id, token_key)
+);
+
+-- 4. Audit Log (Time Machine Feature)
+CREATE TABLE version_history (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  site_id UUID REFERENCES scraped_sites(id) ON DELETE CASCADE,
+  previous_state JSONB NOT NULL,
+  new_state JSONB NOT NULL,
+  changed_at TIMESTAMPTZ DEFAULT NOW()
+);
+```

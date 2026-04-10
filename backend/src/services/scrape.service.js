@@ -46,6 +46,10 @@ export async function scrapeSite(url) {
       }
 
       const heroImageObj = document.querySelector('meta[property="og:image"]')?.content || document.querySelector('img')?.src || null;
+      let globalBg = window.getComputedStyle(document.body).backgroundColor;
+      if (globalBg === 'rgba(0, 0, 0, 0)' || globalBg === 'transparent') {
+        globalBg = null;
+      }
 
       return {
         title: document.title,
@@ -54,6 +58,7 @@ export async function scrapeSite(url) {
         fontSizes,
         spacingValues,
         imageUrl: heroImageObj,
+        globalBg,
       };
     });
 
@@ -76,6 +81,7 @@ export async function scrapeSite(url) {
       url,
       colors: extracted.colors,
       imagePalette,
+      globalBg: extracted.globalBg,
       fonts: extracted.fonts,
       fontSizes: extracted.fontSizes,
       spacingValues: extracted.spacingValues,

@@ -71,16 +71,16 @@ export function HomePage() {
           </div>
 
           {error ? (
-            <div className="rounded-2xl border border-amber-200/30 bg-amber-50/92 p-6 shadow-sm backdrop-blur-md">
+            <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6 shadow-sm backdrop-blur-md">
               <div className="flex items-start gap-3">
-                <svg className="h-5 w-5 flex-shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 flex-shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <div className="flex-1 space-y-2">
-                  <p className="font-semibold text-amber-900">Scrape needs attention</p>
-                  <p className="text-sm leading-relaxed text-amber-800">{error}</p>
-                  <p className="text-sm leading-relaxed text-amber-700">
-                    If a site blocks scanners, try another public URL first. You can still continue from fallback starter tokens when extraction is partial.
+                  <p className="font-semibold text-amber-400">Oops! We couldn't analyze that website</p>
+                  <p className="text-sm leading-relaxed text-amber-200/90">{error}</p>
+                  <p className="text-sm leading-relaxed text-amber-200/70">
+                    Some sites have security settings that block our preview tools. Don't worry—we activated a default theme so you can still start customizing right away!
                   </p>
                 </div>
               </div>

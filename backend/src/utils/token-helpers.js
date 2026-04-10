@@ -26,12 +26,15 @@ function pickMostFrequent(values, fallback) {
   return sorted[0]?.[0] || fallback;
 }
 
-export function createBaseTokens({ url, colors = [], imagePalette = null, fonts = [], fontSizes = [], spacingValues = [] }) {
+export function createBaseTokens({ url, colors = [], imagePalette = null, globalBg = null, fonts = [], fontSizes = [], spacingValues = [] }) {
   const normalizedColors = colors.map(rgbToHex).filter(Boolean);
   const primary = imagePalette?.vibrant || pickMostFrequent(normalizedColors, '#2563eb');
   const text = normalizedColors.find((value) => value !== primary) || '#0f172a';
-  const background = normalizedColors.find((value) => value.toLowerCase() === '#ffffff') || '#f8fafc';
-  const secondary = imagePalette?.darkVibrant || normalizedColors.find((value) => value !== primary && value !== text) || '#14b8a6';
+  
+  const extractedBg = globalBg ? rgbToHex(globalBg) : null;
+  const background = extractedBg || normalizedColors.find((value) => value.toLowerCase() === '#ffffff') || pickMostFrequent(normalizedColors, '#f8fafc');
+  
+  const secondary = imagePalette?.darkVibrant || normalizedColors.find((value) => value !== primary && value !== text && value !== background) || '#14b8a6';
   const fontFamily = pickMostFrequent(fonts, "'Manrope', sans-serif");
   const baseSize = pickMostFrequent(fontSizes, '16px');
   const baseUnit = pickMostFrequent(spacingValues.map(String), '4');

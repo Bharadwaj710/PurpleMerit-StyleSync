@@ -161,7 +161,12 @@ export function TokenEditor() {
                     className="h-8 w-8 flex-shrink-0 rounded-xl border-2 border-white shadow-sm ring-1 ring-slate-200 transition-transform group-hover:scale-105"
                     style={{ backgroundColor: value }}
                   />
-                  <span className="text-sm">{key}</span>
+                  <span className="text-sm">
+                    {key === 'primary' ? 'Main Brand (Primary)' :
+                     key === 'secondary' ? 'Accent (Secondary)' :
+                     key === 'surface' ? 'Card Box (Surface)' :
+                     key}
+                  </span>
                 </label>
                 <input
                   type="color"
@@ -253,7 +258,7 @@ export function TokenEditor() {
       <div className="space-y-4">
         <SectionHeader
           title="Spacing"
-          helperText="System rhythm and scale steps"
+          helperText="Controls the gaps between elements and layout structure"
           countLabel={`${tokens.spacing.scale.length} steps`}
           expanded={expandedSections.spacing}
           onToggle={() => toggleSection('spacing')}
@@ -276,7 +281,11 @@ export function TokenEditor() {
                     : 'border-slate-100 bg-slate-50/55 hover:border-slate-200 hover:bg-white hover:shadow-sm'
                 }`}
               >
-                <span className="text-xs font-bold text-slate-500">Step {index + 1}</span>
+                <div className="flex flex-col items-center justify-center w-[60px]">
+                  <span className="text-xs font-bold text-slate-700">
+                    {['XS', 'SM', 'MD', 'LG', 'XL', '2XL', '3XL'][index] || `Step ${index + 1}`}
+                  </span>
+                </div>
                 <input
                   type="range"
                   min="2"

@@ -64,6 +64,9 @@ export function PreviewGrid() {
       ? tokens.colors.text
       : getReadableTextColor(inputBackground);
 
+  const textContrast = getContrastRatio(tokens.colors.text, previewBackground);
+  const buttonContrast = getContrastRatio(primaryText, previewPrimary);
+
   return (
     <section
       className="rounded-[2rem] border border-white/30 bg-white/80 p-6 shadow-panel backdrop-blur-md"
@@ -169,7 +172,7 @@ export function PreviewGrid() {
                   }}
                 >
                   <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: mutedText }}>
-                    Focus field
+                    Active Input State
                   </p>
                   <input
                     defaultValue="Design system search"
@@ -189,7 +192,7 @@ export function PreviewGrid() {
                     borderColor: 'rgba(239,68,68,0.24)',
                   }}
                 >
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-red-500">Error field</p>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-red-500">Error Input State</p>
                   <input
                     defaultValue="Invalid token value"
                     className="w-full rounded-xl border bg-white px-4 py-3 text-red-500 outline-none"
@@ -305,9 +308,12 @@ export function PreviewGrid() {
               style={{ background: cardSurface, borderColor: cardBorder, boxShadow: cardShadow, color: surfaceText }}
             >
               <p className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: mutedText }}>
-                Layout rhythm
+                Spacing & Layout System
               </p>
-              <div className="mt-4 flex items-end gap-3">
+              <p className="mt-2 text-xs leading-relaxed" style={{ color: mutedText, marginBottom: '1.25rem' }}>
+                Watch how your spacing toggles expand or shrink the gaps. This invisible rhythm is what keeps a website looking structured and professional!
+              </p>
+              <div className="flex items-end gap-3">
                 {tokens.spacing.scale.slice(0, 5).map((space, index) => (
                   <div key={space} className="flex-1 text-center">
                     <div
@@ -321,6 +327,67 @@ export function PreviewGrid() {
                     <span className="mt-3 block text-xs font-semibold uppercase tracking-[0.15em]" style={{ color: mutedText }}>
                       {space}px
                     </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div
+              className="rounded-[1.5rem] border p-5 backdrop-blur-sm"
+              style={{ background: cardSurface, borderColor: cardBorder, boxShadow: cardShadow, color: surfaceText }}
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: mutedText }}>
+                  Accessibility
+                </p>
+                <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600 backdrop-blur">
+                  WCAG 2.1
+                </div>
+              </div>
+
+              <p className="mt-2 text-xs leading-relaxed" style={{ color: mutedText, marginBottom: '1.25rem' }}>
+                Ensure your color pairings have enough contrast so that text and buttons remain highly readable for all users.
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  { label: 'Normal Text', ratio: textContrast, fg: tokens.colors.text, bg: previewBackground },
+                  { label: 'Primary Button', ratio: buttonContrast, fg: primaryText, bg: previewPrimary },
+                ].map(({ label, ratio, fg, bg }) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between rounded-xl border p-3 shadow-none backdrop-blur-sm transition-all hover:bg-white/40"
+                    style={{ borderColor: cardBorder }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm"
+                        style={{ backgroundColor: bg, color: fg, borderColor: cardBorder }}
+                      >
+                        <span className="font-serif text-lg font-bold">Aa</span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.1em]" style={{ color: mutedText }}>
+                          {label}
+                        </p>
+                        <p className="mt-0.5 text-sm font-bold leading-tight">{ratio.toFixed(2)}</p>
+                      </div>
+                    </div>
+                    <div className="ml-2 flex-shrink-0">
+                      {ratio >= 4.5 ? (
+                        <span className="inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-600">
+                          AAA Pass
+                        </span>
+                      ) : ratio >= 3.0 ? (
+                        <span className="inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-bold text-amber-600">
+                          AA Large
+                        </span>
+                      ) : (
+                        <span className="inline-block rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-1 text-xs font-bold text-red-600">
+                          Fail
+                        </span>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
