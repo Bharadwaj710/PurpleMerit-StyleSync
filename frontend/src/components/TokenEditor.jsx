@@ -121,7 +121,7 @@ export function TokenEditor() {
   }
 
   return (
-    <section className="space-y-8 rounded-[2rem] border border-white/30 bg-white/80 p-8 shadow-panel backdrop-blur-md">
+    <section className="space-y-8 rounded-[2rem] border border-white/30 bg-white/80 p-5 sm:p-8 shadow-panel backdrop-blur-md">
       <div className="space-y-2">
         <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">Design Settings</p>
         <h2 className="font-display text-2xl font-bold text-slate-900">Fine-tune your styles</h2>
@@ -150,31 +150,33 @@ export function TokenEditor() {
             {Object.entries(tokens.colors).map(([key, value]) => (
               <div
                 key={key}
-                className={`group grid grid-cols-[1fr_auto_auto] items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
+                className={`group flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-3 transition-all duration-300 ${
                   lockedTokens[`colors.${key}`] 
                     ? 'border-sky-200 bg-sky-50/40 shadow-[0_0_15px_rgba(56,189,248,0.15)] ring-1 ring-sky-300/50 scale-[1.01]' 
                     : 'border-slate-100 bg-slate-50/55 hover:border-slate-200 hover:bg-white hover:shadow-sm'
                 }`}
               >
-                <label className="flex items-center gap-3 font-medium capitalize text-slate-700">
+                <label className="flex min-w-[140px] flex-1 items-center gap-3 font-medium capitalize text-slate-700">
                   <div
                     className="h-8 w-8 flex-shrink-0 rounded-xl border-2 border-white shadow-sm ring-1 ring-slate-200 transition-transform group-hover:scale-105"
                     style={{ backgroundColor: value }}
                   />
-                  <span className="text-sm">
-                    {key === 'primary' ? 'Main Brand (Primary)' :
-                     key === 'secondary' ? 'Accent (Secondary)' :
-                     key === 'surface' ? 'Card Box (Surface)' :
+                  <span className="text-sm truncate">
+                    {key === 'primary' ? 'Main Brand ' :
+                     key === 'secondary' ? 'Accent' :
+                     key === 'surface' ? 'Card Box' :
                      key}
                   </span>
                 </label>
-                <input
-                  type="color"
-                  value={value}
-                  onChange={(event) => updateTokens('colors', key, event.target.value)}
-                  className="h-10 w-16 cursor-pointer rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300"
-                />
-                <LockButton tokenKey={`colors.${key}`} />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={value}
+                    onChange={(event) => updateTokens('colors', key, event.target.value)}
+                    className="h-10 w-14 sm:w-16 cursor-pointer rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300"
+                  />
+                  <LockButton tokenKey={`colors.${key}`} />
+                </div>
               </div>
             ))}
           </div>
@@ -235,17 +237,17 @@ export function TokenEditor() {
             {Object.entries(tokens.typography.headingScale).map(([key, value]) => (
               <div
                 key={key}
-                className={`grid grid-cols-[80px_1fr_auto] items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
+                className={`flex flex-wrap items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
                   lockedTokens[`typography.headingScale.${key}`] 
                     ? 'border-sky-200 bg-sky-50/40 shadow-[0_0_15px_rgba(56,189,248,0.15)] ring-1 ring-sky-300/50 scale-[1.01]' 
                     : 'border-slate-100 bg-slate-50/55 hover:border-slate-200 hover:bg-white hover:shadow-sm'
                 }`}
               >
-                <span className="text-sm font-semibold uppercase text-slate-600">{key}</span>
+                <span className="w-16 text-sm font-semibold uppercase text-slate-600">{key}</span>
                 <input
                   value={value}
                   onChange={(event) => updateHeadingScale(key, event.target.value)}
-                  className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm shadow-sm outline-none transition-all focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
+                  className="h-11 min-w-[100px] flex-1 rounded-xl border border-slate-200 bg-white px-4 text-sm shadow-sm outline-none transition-all focus:border-blue-400 focus:ring-4 focus:ring-blue-400/10"
                   placeholder="e.g., 2rem"
                 />
                 <LockButton tokenKey={`typography.headingScale.${key}`} />
@@ -275,13 +277,13 @@ export function TokenEditor() {
             {tokens.spacing.scale.map((value, index) => (
               <div
                 key={`${index}-${value}`}
-                className={`grid grid-cols-[60px_1fr_auto_auto] items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
+                className={`flex flex-wrap items-center gap-3 rounded-2xl border p-3 transition-all duration-300 ${
                   lockedTokens[`spacing.scale.${index}`] 
                     ? 'border-sky-200 bg-sky-50/40 shadow-[0_0_15px_rgba(56,189,248,0.15)] ring-1 ring-sky-300/50 scale-[1.01]' 
                     : 'border-slate-100 bg-slate-50/55 hover:border-slate-200 hover:bg-white hover:shadow-sm'
                 }`}
               >
-                <div className="flex flex-col items-center justify-center w-[60px]">
+                <div className="flex w-[40px] sm:w-[60px] flex-col items-center justify-center">
                   <span className="text-xs font-bold text-slate-700">
                     {['XS', 'SM', 'MD', 'LG', 'XL', '2XL', '3XL'][index] || `Step ${index + 1}`}
                   </span>
@@ -292,13 +294,15 @@ export function TokenEditor() {
                   max="96"
                   value={value}
                   onChange={(event) => updateSpacingScale(index, event.target.value)}
-                  className="h-2 cursor-pointer appearance-none rounded-full bg-slate-200"
+                  className="h-2 min-w-[100px] flex-1 cursor-pointer appearance-none rounded-full bg-slate-200"
                   style={{
                     background: `linear-gradient(to right, rgb(59 130 246) 0%, rgb(59 130 246) ${((value - 2) / 94) * 100}%, rgb(226 232 240) ${((value - 2) / 94) * 100}%, rgb(226 232 240) 100%)`,
                   }}
                 />
-                <span className="rounded-xl bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700">{value}px</span>
-                <LockButton tokenKey={`spacing.scale.${index}`} />
+                <div className="flex items-center justify-end gap-2 ml-auto">
+                  <span className="rounded-xl bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-700">{value}px</span>
+                  <LockButton tokenKey={`spacing.scale.${index}`} />
+                </div>
               </div>
             ))}
           </div>

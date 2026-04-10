@@ -69,7 +69,7 @@ export function PreviewGrid() {
 
   return (
     <section
-      className="rounded-[2rem] border border-white/30 bg-white/80 p-6 shadow-panel backdrop-blur-md"
+      className="rounded-[2rem] border border-white/30 bg-white/80 p-4 sm:p-6 shadow-panel backdrop-blur-md"
       style={{
         '--color-primary': previewPrimary,
         '--color-secondary': previewSecondary,
@@ -280,7 +280,7 @@ export function PreviewGrid() {
                   We apply your colors and fonts to realistic UI elements so you can instantly see if the combination feels right.
                 </p>
 
-                <div className="mt-6 grid grid-cols-3 gap-3">
+                <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="rounded-2xl border p-3 backdrop-blur" style={{ background: showcaseChipBackground, borderColor: showcaseChipBorder }}>
                     <p className="text-2xl font-semibold">{tokens.spacing.baseUnit}px</p>
                     <p className="mt-1 text-xs uppercase tracking-[0.14em]" style={{ color: showcaseSoftText }}>

@@ -54,9 +54,9 @@ export function ExportPanel() {
   ];
 
   return (
-    <section className="rounded-[2rem] border border-white/30 bg-white/80 p-8 shadow-panel backdrop-blur-md">
+    <section className="rounded-[2rem] border border-white/30 bg-white/80 p-5 sm:p-8 shadow-panel backdrop-blur-md">
       {/* Header */}
-      <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-2">
           <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">
             Export
@@ -98,7 +98,7 @@ export function ExportPanel() {
       </div>
 
       {/* Format Selector */}
-      <div className="mb-6 grid grid-cols-3 gap-3">
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
         {exportOptions.map((option) => {
           const isActive = activeExport === option.key;
           return (
