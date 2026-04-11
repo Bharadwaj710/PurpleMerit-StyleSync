@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --watch src/index.js",
     "start": "node src/index.js",
+    "postinstall": "npx puppeteer browsers install chrome",
     "build": "node -e \"console.log('backend build step not required yet')\"",
     "lint": "node -e \"console.log('backend lint not configured yet')\""
   },
