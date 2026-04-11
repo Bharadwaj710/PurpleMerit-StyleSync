@@ -7,7 +7,7 @@ app.listen(env.PORT, async () => {
   console.log(
     `[scrape] Puppeteer launch config: headless=${env.PUPPETEER_HEADLESS}, executablePath=${
       env.PUPPETEER_EXECUTABLE_PATH || 'bundled-browser'
-    }`,
+    }, cacheDir=${env.PUPPETEER_CACHE_DIR}`,
   );
 
   const supabaseStatus = await verifySupabaseConnection();
