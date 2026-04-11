@@ -3,7 +3,12 @@ import { env } from './config/env.js';
 import { verifySupabaseConnection } from './config/supabase.js';
 
 app.listen(env.PORT, async () => {
-  console.log(`StyleSync API listening on http://localhost:${env.PORT}`);
+  console.log(`StyleSync API listening on port ${env.PORT}`);
+  console.log(
+    `[scrape] Puppeteer launch config: headless=${env.PUPPETEER_HEADLESS}, executablePath=${
+      env.PUPPETEER_EXECUTABLE_PATH || 'bundled-browser'
+    }`,
+  );
 
   const supabaseStatus = await verifySupabaseConnection();
   console.log(`[supabase] ${supabaseStatus.message}`);

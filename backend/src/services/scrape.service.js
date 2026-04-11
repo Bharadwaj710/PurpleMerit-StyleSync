@@ -3,19 +3,49 @@ import { Vibrant } from 'node-vibrant/node';
 import { env } from '../config/env.js';
 import { buildFallbackTokens, classifyPersonality, createBaseTokens } from '../utils/token-helpers.js';
 
+function getBrowserLaunchOptions() {
+  const launchOptions = {
+    headless: env.PUPPETEER_HEADLESS,
+    protocolTimeout: env.PUPPETEER_PROTOCOL_TIMEOUT,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--no-zygote',
+    ],
+  };
+
+  if (env.PUPPETEER_EXECUTABLE_PATH) {
+    launchOptions.executablePath = env.PUPPETEER_EXECUTABLE_PATH;
+  }
+
+  return launchOptions;
+}
+
+function logScrapeFailure(stage, url, error) {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(`[scrape] ${stage} failed for ${url}: ${message}`);
+
+  if (error instanceof Error && error.stack && env.NODE_ENV !== 'production') {
+    console.error(error.stack);
+  }
+}
+
 export async function scrapeSite(url) {
   let browser;
 
   try {
-    browser = await puppeteer.launch({
-      headless: env.PUPPETEER_HEADLESS,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    browser = await puppeteer.launch(getBrowserLaunchOptions());
 
     const page = await browser.newPage();
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    );
+
     await page.goto(url, {
-      waitUntil: 'networkidle2',
-      timeout: 45000,
+      waitUntil: 'domcontentloaded',
+      timeout: env.PUPPETEER_NAVIGATION_TIMEOUT,
     });
 
     const extracted = await page.evaluate(() => {
@@ -97,7 +127,9 @@ export async function scrapeSite(url) {
       tokens,
       warnings: [],
     };
-  } catch (_error) {
+  } catch (error) {
+    logScrapeFailure('Scrape pipeline', url, error);
+
     const fallbackTokens = buildFallbackTokens(url);
     fallbackTokens.metadata.pageTitle = new URL(url).hostname;
 
